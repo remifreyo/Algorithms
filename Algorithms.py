@@ -50,28 +50,36 @@ def locate_card_binary(cards, query):
     
     return binary_search(0, len(cards) - 1, condition)
 
-# new_tests = [
-#     {'input': {'nums': [19, 25, 29, 3, 5, 6, 7, 9, 11, 14]}, 'output': 3}, 
-#     {'input': {'nums': 0}, 'output': 0}
-# ]
+new_tests = [
+    {'input': {'nums': [19, 25, 29, 3, 5, 6, 7, 9, 11, 14]}, 'output': 3}, 
+    {'input': {'nums': [0]}, 'output': 0},
+    {'input': {'nums': [5, 6, 7, 1, 3]}, 'output': 3}
+]
 
-# def count_rotations_linear(nums):
-#     position = 0
+#Linear Search Function
+def count_rotations_linear(nums):
+    position = 0
+    while position < len(nums):
+        if position > 0 and nums[position] < nums[position-1]:
+          return position
+        
+        position +=1
+    return 0
+    
 
 #Function for Evaluating Test Cases
 def evaluate_test_cases(function, tests):
     for test in tests:
-      print('input', test['input'], 'Query:')
+      if function == locate_card_linear or function == locate_card_binary:
+          result = function(test['input']['cards'], test['input']['query'])
+      elif function == count_rotations_linear:
+          result = function(test['input']['nums'])
+      print('Input:', test['input'])
       print('Expected Output:', test['output'])
-      if function == locate_card_linear or locate_card_binary:
-        result = function(test['input']['cards'], test['input']['query'])
-      # elif function == count_rotations_linear:
-      #     result = function(test['nums'])
       print('Actual Output:', result)
       print('Test Passed:', (result == test['output']))
       print('')
 
-
 evaluate_test_cases(locate_card_linear, tests)
 evaluate_test_cases(locate_card_binary, tests)
-# evaluate_test_cases(count_rotations, new_tests)
+evaluate_test_cases(count_rotations_linear, new_tests)
