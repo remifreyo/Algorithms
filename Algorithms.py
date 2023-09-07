@@ -126,7 +126,7 @@ def evaluate_test_cases(function, tests):
 # evaluate_test_cases(count_rotations_binary, new_tests)
 
 #Python Classes 
-# Insert, Find, Update, and List (Brute Force|Sorted|Linear)
+# Insert, Find, Update, and List (Brute Force/Linear)
 class User:
     def __init__(self, username, name, email):
         self.username = username
@@ -158,25 +158,7 @@ class UserDatabase:
     def list_all(self):
         return self.users
 
-#Test User and Username Classes and Methods
-# John = User('John','John Doe', 'john@doe.com' )
-# Jorge = User('Jorge','Jorge Doe', 'jorge@doe.com' )
-# Jane = User('Jane','Jane Doe', 'jane@doe.com' )
-# database = UserDatabase()
-# database.insert(John)
-# database.insert(Jane)
-# database.insert(Jorge)
-# user = database.find('Jorge')
-# print(user)
-# database.update(User('Jorge', name='Jorge Smith', email='jorge@doe.com' ))
-# print(user)
-# print(database.list_all())
-# Allie = User('Allie', 'Allie Gordon', 'allie@gordon.com')
-# database.insert(Allie)
-# print(database.list_all())
-
-# Insert, Find, Update, and List (Binary Search Tree)
-
+# Binary Search Tree + Useful Methods
 class TreeNode:
     def __init__(self, key, value=None):
         self.key = key
@@ -194,6 +176,36 @@ class TreeNode:
         elif key > self.key:
             self.right = TreeNode.insert(self.right, key, value)
             self.right.parent = self
+        return self
+
+    def find(self, key):
+        if self is None:
+            return None
+        if key == self.key:
+            return self
+        if key < self.key:
+            return TreeNode.find(self.left, key)
+        if key > self.key:
+            return TreeNode.find(self.right, key)
+        
+    def update(self, key, value):
+        target = TreeNode.find(self, key)
+        if target is not None:
+            target.value = value
+
+    def list_all(self):
+        if self is None:
+            return []
+        return TreeNode.list_all(self.left) + [(self.key, self.value)] + TreeNode.list_all(self.right)
+    
+    def is_balanced(self):
+        if self is None:
+            return True, 0
+        balanced_l, height_l = TreeNode.is_balanced(self.left)
+        balanced_r, height_r = TreeNode.is_balanced(self.left)
+        balanced = balanced_l and balanced_r and abs(height_l - height_r) <= 1
+        height = 1 + max(height_l, height_r)
+        return balanced, height
 
     def height(self):
       if self is None: 
@@ -249,20 +261,38 @@ class TreeNode:
             node = TreeNode(data)
         return node
     
-def remove_none(nums):
-    return [x for x in nums if x is not None]
+    def is_bst(self):
+        def remove_none(nums):
+          return [x for x in nums if x is not None]
+        if self is None:
+            return True, None, None
+        is_bst_l, min_l, max_l = TreeNode.is_bst(self.left)
+        is_bst_r, min_r, max_r = TreeNode.is_bst(self.right)
+        is_bst_self = (is_bst_l and is_bst_r and 
+                      (max_l is None or self.key > max_l) and 
+                      (min_r is None or self.key < min_r))
+        min_key = min(remove_none([min_l, self.key, min_r]))
+        max_key = max(remove_none([max_l, self.key, max_r]))
+        return is_bst_self, min_key, max_key
+    
+    def make_balanced_bst(data, lo=0, hi=None, parent=None):
+        if hi is None:
+            hi = len(data) - 1
+        if lo > hi:
+            return None
+        
+        mid = (lo + hi) // 2
+        key, value = data[mid]
 
-def is_bst(node):
-    if node is None:
-        return True, None, None
-    is_bst_l, min_l, max_l = is_bst(node.left)
-    is_bst_r, min_r, max_r = is_bst(node.right)
-    is_bst_node = (is_bst_l and is_bst_r and 
-                   (max_l is None or node.key > max_l) and 
-                   (min_r is None or node.key < min_r))
-    min_key = min(remove_none([min_l, node.key, min_r]))
-    max_key = max(remove_none([max_l, node.key, max_r]))
-    return is_bst_node, min_key, max_key
+        root = TreeNode(key, value)
+        root.parent = parent
+        root.left = TreeNode.make_balanced_bst(data, lo, mid-1, root)
+        root.right = TreeNode.make_balanced_bst(data, mid+1, hi, root)
+
+        return root
+    def balance_bst(self):
+        return TreeNode.make_balanced_bst(TreeNode.list_all(self))
+
 
 Amber = User('Amber', 'Amber Graham', 'amber@graham.com')
 Billy = User('Billy', 'Billy Bob', 'billy@bob.com')
@@ -272,9 +302,12 @@ Sally = User('Sally', 'Sally Sue', 'sally@sue.com')
 Simone = User('Simone', 'Simone Hicks', 'simone@hicks.com')
 Veronica = User('Veronica', 'Veronica Sanchez', 'veronica@sanchez.com')
 
-tree = TreeNode(Jeremy.username, Jeremy)
-tree.left = TreeNode(Billy.username, Billy)
-tree.left.parent = tree
-tree.right = TreeNode(Simone.username, Simone)
-tree.right.parent = tree
+users = [Amber, Billy, Herman, Jeremy, Sally, Simone, Veronica]
+data = [(user.username, user) for user in users]
+
+tree = TreeNode.make_balanced_bst(data)
+tree2 = None
+for username, user in data:
+    tree2 = TreeNode.insert(tree2, username, user)
+tree2 = TreeNode.balance_bst(tree2)
 print(())
