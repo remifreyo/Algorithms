@@ -20,20 +20,6 @@ class Timer:
 t = Timer()
 
 #Algorithms
-
-#Test Cases
-tests = [
-    {'input': {'cards': [13, 11, 10, 7, 4, 3, 1, 0], 'query': 7}, 'output': 3},
-    {'input': {'cards': [13, 11, 10, 7, 4, 3, 1, 0], 'query': 1}, 'output': 6},
-    {'input': {'cards': [4, 2, 1, -1], 'query': 4}, 'output': 0},
-    {'input': {'cards': [3, -1, -9, -127], 'query': -127}, 'output': 3},
-    {'input': {'cards': [6], 'query': 6}, 'output': 0},
-    {'input': {'cards': [9, 7, 5, 2, -9], 'query': 4}, 'output': -1},
-    {'input': {'cards': [], 'query': 7}, 'output': -1},
-    {'input': {'cards': [8, 8, 6, 6, 6, 6, 6, 3, 2, 2, 2, 0, 0, 0], 'query': 3}, 'output': 7},
-    {'input': {'cards': [8, 8, 6, 6, 6, 6, 6, 6, 3, 2, 2, 2, 0, 0, 0], 'query': 6}, 'output': 2}
-    ]
-
 #Linear Search Function
 def locate_card_linear(cards, query):
     position = 0
@@ -70,13 +56,6 @@ def locate_card_binary(cards, query):
             return 'right'
     
     return binary_search(0, len(cards) - 1, condition)
-
-new_tests = [
-    {'input': {'nums': [19, 25, 29, 3, 5, 6, 7, 9, 11, 14]}, 'output': 3}, 
-    {'input': {'nums': [0]}, 'output': 0},
-    {'input': {'nums': [5, 6, 7, 1, 3]}, 'output': 3},
-    {'input': {'nums': [7, 1, 3, 5, 6]}, 'output': 1}
-]
 
 #Linear Search Function
 def count_rotations_linear(nums):
@@ -119,6 +98,26 @@ def evaluate_test_cases(function, tests):
       print('Test Passed:', (result == test['output']))
       t.stop()
       print('')
+
+#Test Cases
+tests = [
+    {'input': {'cards': [13, 11, 10, 7, 4, 3, 1, 0], 'query': 7}, 'output': 3},
+    {'input': {'cards': [13, 11, 10, 7, 4, 3, 1, 0], 'query': 1}, 'output': 6},
+    {'input': {'cards': [4, 2, 1, -1], 'query': 4}, 'output': 0},
+    {'input': {'cards': [3, -1, -9, -127], 'query': -127}, 'output': 3},
+    {'input': {'cards': [6], 'query': 6}, 'output': 0},
+    {'input': {'cards': [9, 7, 5, 2, -9], 'query': 4}, 'output': -1},
+    {'input': {'cards': [], 'query': 7}, 'output': -1},
+    {'input': {'cards': [8, 8, 6, 6, 6, 6, 6, 3, 2, 2, 2, 0, 0, 0], 'query': 3}, 'output': 7},
+    {'input': {'cards': [8, 8, 6, 6, 6, 6, 6, 6, 3, 2, 2, 2, 0, 0, 0], 'query': 6}, 'output': 2}
+    ]
+
+new_tests = [
+    {'input': {'nums': [19, 25, 29, 3, 5, 6, 7, 9, 11, 14]}, 'output': 3}, 
+    {'input': {'nums': [0]}, 'output': 0},
+    {'input': {'nums': [5, 6, 7, 1, 3]}, 'output': 3},
+    {'input': {'nums': [7, 1, 3, 5, 6]}, 'output': 1}
+]
 
 # evaluate_test_cases(locate_card_linear, tests)
 # evaluate_test_cases(locate_card_binary, tests)
@@ -293,7 +292,7 @@ class TreeNode:
     def balance_bst(self):
         return TreeNode.make_balanced_bst(TreeNode.list_all(self))
 
-
+#Test Cases
 # Amber = User('Amber', 'Amber Graham', 'amber@graham.com')
 # Billy = User('Billy', 'Billy Bob', 'billy@bob.com')
 # Herman = User('Herman', 'Herman Anderson', 'herman@anderson.com')
@@ -311,7 +310,7 @@ class TreeNode:
 #     tree2 = TreeNode.insert(tree2, username, user)
 # tree2 = TreeNode.balance_bst(tree2)
 
-
+#Hash Tables
 MAX_HASH_TABLE_SIZE = 4096
 
 class HashTable:
@@ -360,6 +359,14 @@ def get_valid_index(data_list, key):
 
 table = HashTable()
 table.insert('Jeremy', '3811675')
+
+#Sorting
+def sort(nums):
+    pass
+
+
 print((
+
+
 
 ))
