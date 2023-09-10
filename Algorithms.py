@@ -86,7 +86,7 @@ def count_rotations_linear(nums):
           return position
         
         position +=1
-    return 0.
+    return 0
     
 #Binary Search Function
 def count_rotations_binary(nums):
@@ -294,20 +294,72 @@ class TreeNode:
         return TreeNode.make_balanced_bst(TreeNode.list_all(self))
 
 
-Amber = User('Amber', 'Amber Graham', 'amber@graham.com')
-Billy = User('Billy', 'Billy Bob', 'billy@bob.com')
-Herman = User('Herman', 'Herman Anderson', 'herman@anderson.com')
-Jeremy = User('Jeremy', 'Jeremy Cox', 'jeremy@cox.com')
-Sally = User('Sally', 'Sally Sue', 'sally@sue.com')
-Simone = User('Simone', 'Simone Hicks', 'simone@hicks.com')
-Veronica = User('Veronica', 'Veronica Sanchez', 'veronica@sanchez.com')
+# Amber = User('Amber', 'Amber Graham', 'amber@graham.com')
+# Billy = User('Billy', 'Billy Bob', 'billy@bob.com')
+# Herman = User('Herman', 'Herman Anderson', 'herman@anderson.com')
+# Jeremy = User('Jeremy', 'Jeremy Cox', 'jeremy@cox.com')
+# Sally = User('Sally', 'Sally Sue', 'sally@sue.com')
+# Simone = User('Simone', 'Simone Hicks', 'simone@hicks.com')
+# Veronica = User('Veronica', 'Veronica Sanchez', 'veronica@sanchez.com')
 
-users = [Amber, Billy, Herman, Jeremy, Sally, Simone, Veronica]
-data = [(user.username, user) for user in users]
+# users = [Amber, Billy, Herman, Jeremy, Sally, Simone, Veronica]
+# data = [(user.username, user) for user in users]
 
-tree = TreeNode.make_balanced_bst(data)
-tree2 = None
-for username, user in data:
-    tree2 = TreeNode.insert(tree2, username, user)
-tree2 = TreeNode.balance_bst(tree2)
-print(())
+# tree = TreeNode.make_balanced_bst(data)
+# tree2 = None
+# for username, user in data:
+#     tree2 = TreeNode.insert(tree2, username, user)
+# tree2 = TreeNode.balance_bst(tree2)
+
+
+MAX_HASH_TABLE_SIZE = 4096
+
+class HashTable:
+    def __init__(self, max_size=MAX_HASH_TABLE_SIZE):
+        self.data_list = [None] * max_size
+    def insert(self, key, value):
+        idx = get_valid_index(self.data_list, key)
+        self.data_list[idx] = (key, value)
+        return '({}, {}) was inserted.'.format(key, value)
+    def find(self, key):
+        idx = get_valid_index(self.data_list, key)
+        kv = self.data_list[idx]
+        if kv is None:
+            return None
+        else:
+            key, value = kv
+            return key, value
+    def update(self, key, value):
+        idx = get_valid_index(self.data_list, key)
+        self.data_list[idx] = (key, value)
+        return self.data_list[idx]
+    def list_all(self):
+        return [kv[0] for kv in self.data_list if kv is not None]
+
+def get_index(data_list, a_string):
+        result = 0
+        for a_character in a_string:
+            a_number = ord(a_character)
+            result += a_number
+        list_index = result % len(data_list)
+        return list_index
+
+def get_valid_index(data_list, key):
+    idx = get_index(data_list, key)
+    while True:
+        kv = data_list[idx]
+        if kv is None:
+            return idx
+        k, v = kv
+        if kv[0] == key:
+            return idx
+        idx +=1
+        if idx == len(data_list):
+            idx = 0
+
+
+table = HashTable()
+table.insert('Jeremy', '3811675')
+print((
+
+))
