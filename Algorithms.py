@@ -89,7 +89,7 @@ def evaluate_test_cases(function, tests):
         t.start()
         if function == locate_card_linear or function == locate_card_binary:
             result = function(test['input']['cards'], test['input']['query'])
-        elif function == count_rotations_linear or function == count_rotations_binary or function == bubble_sort or function == insertion_sort:
+        elif function == count_rotations_linear or function == count_rotations_binary or function == bubble_sort or function == insertion_sort or function == merge_sort or function == quick_sort:
             result = function(test['input']['nums'])
         print('Function:', function)
         print('Input:', test['input'])
@@ -379,6 +379,57 @@ def insertion_sort(nums):
         nums.insert(j+1, cur)
     return nums
 
+def merge(nums1, nums2):
+    merged = []
+    i, j = 0, 0
+    while i < len(nums1) and j < len(nums2):
+        if nums1[i] <= nums2[j]:
+            merged.append(nums1[i])
+            i += 1
+        else:
+            merged.append(nums2[j])
+            j +=1
+    nums1_tail = nums1[i:]
+    nums2_tail = nums2[j:]
+    return merged + nums1_tail + nums2_tail
+
+def merge_sort(nums):
+    if len(nums) <=1:
+        return nums
+    mid = len(nums) // 2
+    left = nums[:mid]
+    right = nums[mid:]
+    left_sorted, right_sorted = merge_sort(left), merge_sort(right)
+    sorted_nums = merge(left_sorted, right_sorted)
+    return sorted_nums
+
+def partition(nums, start=0, end=None):
+    if end is None:
+        end = len(nums) - 1
+    l, r = start, end - 1
+    while r > l:
+        if nums[l] <= nums[end]:
+            l += 1
+        elif nums[r] > nums[end]:
+            r -= 1
+        else:
+            nums[l], nums[r] = nums[r], nums[l]
+    if nums[l] > nums[end]:
+        nums[l], nums[end] = nums[end], nums[l]
+        return l
+    else: 
+        return end
+    
+def quick_sort(nums, start=0, end=None):
+    if end is None:
+        nums=list(nums)
+        end = len(nums) - 1
+    if start < end:
+        pivot = partition(nums, start, end)
+        quick_sort(nums, start, pivot-1)
+        quick_sort(nums, pivot+1, end)
+    return nums
+
 #Test Cases
 #List of numbers in random order
 test0 = {
@@ -451,3 +502,5 @@ tests3 = [test0, test1, test2, test3, test4, test5, test6, test7, test8]
 
 # evaluate_test_cases(bubble_sort, tests3)
 # evaluate_test_cases(insertion_sort, tests3)
+# evaluate_test_cases(merge_sort, tests3)
+evaluate_test_cases(quick_sort, tests3)
