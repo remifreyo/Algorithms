@@ -89,7 +89,7 @@ def evaluate_test_cases(function, tests):
         t.start()
         if function == locate_card_linear or function == locate_card_binary:
             result = function(test['input']['cards'], test['input']['query'])
-        elif function == count_rotations_linear or function == count_rotations_binary or function == bubble_sort or function == insertion_sort or function == merge_sort or function == quick_sort:
+        elif function in [bucket_sort, quick_sort, merge_sort, count_rotations_binary, count_rotations_linear, bubble_sort, insertion_sort, counting_sort, selection_sort, heap_sort]:
             result = function(test['input']['nums'])
         print('Function:', function)
         print('Input:', test['input'])
@@ -430,6 +430,103 @@ def quick_sort(nums, start=0, end=None):
         quick_sort(nums, pivot+1, end)
     return nums
 
+def counting_sort(nums):
+    nums = list(nums)
+    if len(nums) == 0:
+        return []
+    # Find the maximum and minimum values in the list
+    max_value = max(nums)
+    min_value = min(nums)
+
+    # Create a counting array to store the frequency of each element
+    count_array_size = max_value - min_value + 1
+    count = [0] * count_array_size
+
+    # Count the frequency of each element
+    for num in nums:
+        count[num - min_value] += 1
+
+    # Reconstruct the sorted list
+    sorted_nums = []
+    for i in range(len(count)):
+        sorted_nums.extend([i + min_value] * count[i])
+
+    return sorted_nums
+
+def bucket_sort(nums):
+    nums = list(nums)
+    if len(nums) == 0:
+        return []
+    # Find the maximum and minimum values in the list
+    max_value = max(nums)
+    min_value = min(nums)
+
+    # Determine the range of integers
+    range_of_integers = max_value - min_value + 1
+
+    # Create empty buckets
+    buckets = [[] for _ in range(range_of_integers)]
+
+    # Place elements into buckets
+    for num in nums:
+        buckets[num - min_value].append(num)
+
+    # Sort each bucket individually (using any sorting algorithm)
+    sorted_nums = []
+    for bucket in buckets:
+        # Sort each bucket using any sorting algorithm (e.g., Python's built-in sorted)
+        sorted_bucket = sorted(bucket)
+        sorted_nums.extend(sorted_bucket)
+
+    return sorted_nums
+
+def selection_sort(nums):
+    nums = list(nums)
+    # Traverse through all array elements starting from 0
+    for i in range(len(nums)):
+        # Find the minimum element in the remaining unsorted array
+        min_index = i
+        for j in range(i + 1, len(nums)):
+            if nums[j] < nums[min_index]:
+                min_index = j
+
+        # Swap the found minimum element with the first element
+        nums[i], nums[min_index] = nums[min_index], nums[i]
+    return nums
+
+def heapify(nums, n, i):
+    largest = i  # Initialize the largest element as the root
+    left_child = 2 * i + 1  # Left child
+    right_child = 2 * i + 2  # Right child
+
+    # Compare the left child with the root
+    if left_child < n and nums[left_child] > nums[largest]:
+        largest = left_child
+
+    # Compare the right child with the largest so far
+    if right_child < n and nums[right_child] > nums[largest]:
+        largest = right_child
+
+    # If the largest element is not the root, swap them
+    if largest != i:
+        nums[i], nums[largest] = nums[largest], nums[i]  # Swap
+        # Recursively heapify the affected sub-tree
+        heapify(nums, n, largest)
+
+def heap_sort(nums):
+    nums = list(nums)
+    n = len(nums)
+
+    # Build a max heap
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(nums, n, i)
+
+    # Extract elements one by one
+    for i in range(n - 1, 0, -1):
+        nums[i], nums[0] = nums[0], nums[i]  # Swap the root (max element) with the last element
+        heapify(nums, i, 0)  # Call heapify on the reduced heap
+    return nums
+
 #Test Cases
 #List of numbers in random order
 test0 = {
@@ -503,4 +600,9 @@ tests3 = [test0, test1, test2, test3, test4, test5, test6, test7, test8]
 # evaluate_test_cases(bubble_sort, tests3)
 # evaluate_test_cases(insertion_sort, tests3)
 # evaluate_test_cases(merge_sort, tests3)
-evaluate_test_cases(quick_sort, tests3)
+# evaluate_test_cases(quick_sort, tests3)
+# evaluate_test_cases(counting_sort, tests3)
+# evaluate_test_cases(bucket_sort, tests3)
+# evaluate_test_cases(selection_sort, tests3)
+# evaluate_test_cases(heap_sort, tests3)
+
