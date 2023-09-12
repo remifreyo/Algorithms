@@ -606,3 +606,22 @@ tests3 = [test0, test1, test2, test3, test4, test5, test6, test7, test8]
 # evaluate_test_cases(selection_sort, tests3)
 # evaluate_test_cases(heap_sort, tests3)
 
+def factorial_iterative(n):
+    result = 1
+    for i in range(1, n + 1):
+        result *= i
+    return result
+
+# Example usage:
+# n = 5
+# print(f"The factorial of {n} (iterative) is {factorial_iterative(n)}")
+
+def factorial_recursive(n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial_recursive(n - 1)
+
+# Example usage:
+# n = 5
+# print(f"The factorial of {n} (recursive) is {factorial_recursive(n)}")
