@@ -625,3 +625,43 @@ def factorial_recursive(n):
 # Example usage:
 # n = 5
 # print(f"The factorial of {n} (recursive) is {factorial_recursive(n)}")
+
+def gcd_iterative(a, b):
+    while b:
+        a, b = b, a % b
+        print(b)
+    return a
+
+# Example usage:
+# num1 = 48
+# num2 = 18
+# print(f"The GCD of {num1} and {num2} (iterative) is {gcd_iterative(num1, num2)}")
+
+def gcd_recursive(a, b):
+    if b == 0:
+        return a
+    else:
+        return gcd_recursive(b, a % b)
+
+# Example usage:
+# num1 = 48
+# num2 = 18
+# print(f"The GCD of {num1} and {num2} (recursive) is {gcd_recursive(num1, num2)}")
+
+def fibonacci_recursive(n):
+    if n < 0:
+        return "Invalid input"
+    elif n == 0:
+        return 0
+    elif n == 1:
+        return 1
+    else:
+        a, b = 0, 1
+        for _ in range(1, n):
+            a, b = b, a + b
+        return a
+
+# Example usage:
+n = 8
+result = fibonacci_recursive(n)
+print(f"The {n}-th Fibonacci number is {result}")
